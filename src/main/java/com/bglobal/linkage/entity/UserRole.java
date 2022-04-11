@@ -1,9 +1,10 @@
 package com.bglobal.linkage.entity;
 
+import com.bglobal.linkage.support.UserRoleId;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -12,6 +13,7 @@ public class UserRole {
     @EmbeddedId
     private UserRoleId id;
 
+    @JsonBackReference
     @ManyToOne
     @MapsId("userId")
     @JoinColumn(name = "user_id", referencedColumnName = "id")

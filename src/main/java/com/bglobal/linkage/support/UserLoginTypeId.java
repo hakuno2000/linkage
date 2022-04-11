@@ -1,4 +1,4 @@
-package com.bglobal.linkage.entity;
+package com.bglobal.linkage.support;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -11,7 +11,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @EqualsAndHashCode
 @Embeddable
-public class UserRoleId implements Serializable {
+public class UserLoginTypeId implements Serializable {
     private String userId;
-    private String roleId;
+    private Integer loginTypeId;
 }

@@ -1,5 +1,6 @@
 package com.bglobal.linkage.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,6 +33,7 @@ public class Service {
     @Column(name = "state")
     private Integer state;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "service")
     private Set<User> users;
 
