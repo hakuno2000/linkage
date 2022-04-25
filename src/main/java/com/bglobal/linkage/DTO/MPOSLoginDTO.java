@@ -8,8 +8,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class ResponseTokenDTO {
-    private String accessToken;
-    private String expiredTime;
-    private String refreshToken;
+public class MPOSLoginDTO {
+    private Integer userId;
+    private Integer roleId;
+    private String scope;
 }

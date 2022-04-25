@@ -9,13 +9,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class ResponseLoginDTO {
+public class LinkageResponseLoginDTO {
     private String roleId;
     private String serviceId;
     private String sessionId;
     private String userId;
 
-    public ResponseLoginDTO(User user) {
+    public LinkageResponseLoginDTO(User user) {
         this.roleId = "";
         this.serviceId = user.getService().getId().toString();
         this.sessionId = "";

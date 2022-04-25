@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -35,11 +36,11 @@ public class Service {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "service")
-    private Set<User> users;
+    private List<User> users;
 
     @ManyToMany
     @JoinTable(name = "lk_service_scope",
             joinColumns = @JoinColumn(name = "service_id"),
             inverseJoinColumns = @JoinColumn(name = "scope_id"))
-    private Set<Scope> scopes;
+    private List<Scope> scopes;
 }

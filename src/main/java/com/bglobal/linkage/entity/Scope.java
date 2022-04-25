@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -27,5 +28,5 @@ public class Scope {
     private Integer state;
 
     @ManyToMany(mappedBy = "scopes")
-    private Set<Service> services;
+    private List<Service> services;
 }

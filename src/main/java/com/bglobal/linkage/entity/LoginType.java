@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.math.BigInteger;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -32,5 +33,5 @@ public class LoginType {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "loginType")
-    private Set<UserLoginType> userLoginTypes;
+    private List<UserLoginType> userLoginTypes;
 }

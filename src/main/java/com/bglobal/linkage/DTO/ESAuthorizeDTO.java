@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class AuthorizeDTO {
+public class ESAuthorizeDTO {
     private String clientId;
     private String clientSecret;
     private String scope;
