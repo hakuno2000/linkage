@@ -27,6 +27,11 @@ public class UserController {
 //    public ResponseEntity<Object> testLogin() {
 //        return ResponseEntity.ok(linkageService.loginToMPOS());
 //    }
+//
+//    @GetMapping("auth")
+//    public ResponseEntity<Object> testAuth() {
+//        return ResponseEntity.ok(linkageService.authorizeMPOS());
+//    }
 
     @PostMapping("auth/login")
     public ResponseEntity<Object> login(@RequestBody ESLoginDTO requestESLoginDto, HttpServletRequest request) {
