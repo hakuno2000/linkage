@@ -1,6 +1,10 @@
 package com.bglobal.linkage.support;
 
-import java.util.Properties;
+import lombok.Getter;
+import lombok.Setter;
 
-public class GlobalProperties extends Properties {
+@Getter
+@Setter
+public class GlobalProperties {
+    public static Integer serviceId = 5;
 }

@@ -4,9 +4,10 @@ import com.bglobal.linkage.DTO.ESAuthorizeDTO;
 import com.bglobal.linkage.DTO.LinkageResponseLoginDTO;
 import com.bglobal.linkage.DTO.LinkageResponseTokenDTO;
 import com.bglobal.linkage.entity.User;
-import com.bglobal.linkage.service.LinkageService;
 import com.bglobal.linkage.service.UserService;
 import com.bglobal.linkage.DTO.ESLoginDTO;
+import com.bglobal.linkage.support.GlobalProperties;
+import org.apache.tomcat.jni.Global;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +21,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private LinkageService linkageService;
+//    @Autowired
+//    private LinkageService linkageService;
 
 //    @GetMapping("")
 //    public ResponseEntity<Object> testLogin() {
@@ -39,6 +40,7 @@ public class UserController {
         if (user == null) return ResponseEntity.status(401).build();
         LinkageResponseLoginDTO linkageResponseLoginDto = new LinkageResponseLoginDTO(user);
         linkageResponseLoginDto.setSessionId(request.getSession().getId());
+        GlobalProperties.serviceId = Integer.valueOf(user.getService().getId());
         return ResponseEntity.ok(linkageResponseLoginDto);
     }
 

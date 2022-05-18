@@ -3,17 +3,14 @@ package com.bglobal.linkage.service;
 import com.bglobal.linkage.DTO.LinkageResponseCategoryDTO;
 import com.bglobal.linkage.DTO.MPOSAuthorizeDTO;
 import com.bglobal.linkage.DTO.MPOSLoginDTO;
+import com.bglobal.linkage.support.GlobalProperties;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 import java.net.URI;
 import java.util.List;
@@ -76,7 +73,7 @@ public class LinkageServiceImpl implements LinkageService {
                 .build(false).toUri();
 
 //        System.out.println(uri.toString());
-        System.out.println("Cookie = " + cookie);
+//        System.out.println("Cookie = " + cookie);
 
         MPOSAuthorizeDTO response = webClient.post()
                 .uri(uri)
@@ -86,13 +83,18 @@ public class LinkageServiceImpl implements LinkageService {
                 .retrieve()
                 .bodyToMono(MPOSAuthorizeDTO.class).block();
 
+        assert response != null;
+        System.out.println("access token = " + response.getAccessToken());
+        accessToken = response.getAccessToken();
+        refreshToken = response.getRefreshToken();
         return response;
     }
 
     @Override
-    public List<LinkageResponseCategoryDTO> findCategoriesByCommonCode(String categoryCode, String accessToken) {
+    public List<LinkageResponseCategoryDTO> findCategoriesByCommonCode(String categoryCode) {
         URI uri = UriComponentsBuilder.newInstance()
-                .scheme("http").host(System.getenv("MPOS_URI")).path("/dev/v1").path("/commoncode/category/read.json")
+                .scheme("http").host(this.mposUri).path("/dev/v1").path("/commoncode/category/read.json")
+                .queryParam("service_id", GlobalProperties.serviceId)
                 .queryParam("access_token", accessToken)
                 .encode()
                 .build(true).toUri();
