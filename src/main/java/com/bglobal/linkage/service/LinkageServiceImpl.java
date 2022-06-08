@@ -1,6 +1,6 @@
 package com.bglobal.linkage.service;
 
-import com.bglobal.linkage.DTO.LinkageResponseCategoryDTO;
+import com.bglobal.linkage.DTO.LinkageRequestCategoryDTO;
 import com.bglobal.linkage.DTO.MPOSAuthorizeDTO;
 import com.bglobal.linkage.DTO.MPOSLoginDTO;
 import com.bglobal.linkage.support.GlobalProperties;
@@ -91,19 +91,20 @@ public class LinkageServiceImpl implements LinkageService {
     }
 
     @Override
-    public List<LinkageResponseCategoryDTO> findCategoriesByCommonCode(String categoryCode) {
+    public List<LinkageRequestCategoryDTO> findCategoriesByCommonCode(String categoryCode) {
         URI uri = UriComponentsBuilder.newInstance()
                 .scheme("http").host(this.mposUri).path("/dev/v1").path("/commoncode/category/read.json")
                 .queryParam("service_id", GlobalProperties.serviceId)
+                .queryParam("shop_id", GlobalProperties.shopId)
                 .queryParam("access_token", accessToken)
                 .encode()
                 .build(true).toUri();
 
-        Flux<LinkageResponseCategoryDTO> response = webClient.get()
+        Flux<LinkageRequestCategoryDTO> response = webClient.get()
                 .uri(uri)
                 .header("Authorization", accessToken)
                 .retrieve()
-                .bodyToFlux(LinkageResponseCategoryDTO.class);
+                .bodyToFlux(LinkageRequestCategoryDTO.class);
 
         return response.collectList().block();
     }

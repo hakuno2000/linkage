@@ -18,10 +18,18 @@ public class LinkageResponseCategoryDTO {
     private Integer state;
     private Integer created;
     private Integer modified;
-    private Object tags;
+    private String shopCode;
 
     public LinkageResponseCategoryDTO(LinkageRequestCategoryDTO linkageRequestCategoryDTO) {
         this.categoryCode = linkageRequestCategoryDTO.getCommonCode();
         this.name = linkageRequestCategoryDTO.getName();
+        this.description = linkageRequestCategoryDTO.getDescription();
+        this.lft = linkageRequestCategoryDTO.getLft();
+        this.rgt = linkageRequestCategoryDTO.getRgt();
+        this.sortOrder = linkageRequestCategoryDTO.getSortOrder();
+        this.state = linkageRequestCategoryDTO.getState();
+        this.created = linkageRequestCategoryDTO.getCreated();
+        this.modified = linkageRequestCategoryDTO.getModified();
+        this.shopCode = linkageRequestCategoryDTO.getShopId().toString();
     }
 }
