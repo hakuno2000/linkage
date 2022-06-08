@@ -6,5 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class GlobalProperties {
-    public static Integer serviceId = 5;
+    public static Integer serviceId = 2;
+    public static Integer shopId = 452;
 }

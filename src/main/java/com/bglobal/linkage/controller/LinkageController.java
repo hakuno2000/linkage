@@ -1,6 +1,6 @@
 package com.bglobal.linkage.controller;
 
-import com.bglobal.linkage.DTO.LinkageResponseCategoryDTO;
+import com.bglobal.linkage.DTO.LinkageRequestCategoryDTO;
 import com.bglobal.linkage.service.LinkageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,11 +21,12 @@ public class LinkageController {
     public void postConstruct() {
         linkageService.loginToMPOS();
         linkageService.authorizeMPOS();
+        System.out.println("Login completed");
     }
 
     @GetMapping("/linkage/category")
-    public ResponseEntity<List<LinkageResponseCategoryDTO>> getCategories() {
-        List<LinkageResponseCategoryDTO> categories = linkageService.findCategoriesByCommonCode("");
+    public ResponseEntity<List<LinkageRequestCategoryDTO>> getCategories() {
+        List<LinkageRequestCategoryDTO> categories = linkageService.findCategoriesByCommonCode("");
         if (categories.isEmpty()) return ResponseEntity.noContent().build();
         return ResponseEntity.ok(categories);
     }
