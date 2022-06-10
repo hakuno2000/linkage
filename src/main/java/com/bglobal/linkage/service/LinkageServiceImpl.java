@@ -4,6 +4,7 @@ import com.bglobal.linkage.DTO.LinkageRequestCategoryDTO;
 import com.bglobal.linkage.DTO.MPOSAuthorizeDTO;
 import com.bglobal.linkage.DTO.MPOSLoginDTO;
 import com.bglobal.linkage.support.GlobalProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,9 @@ import java.util.List;
 
 @Service
 public class LinkageServiceImpl implements LinkageService {
+    @Autowired
+    private ShopMappingService shopMappingService;
+
     WebClient webClient = WebClient.create();
     String cookie = "";
 
@@ -91,11 +95,14 @@ public class LinkageServiceImpl implements LinkageService {
     }
 
     @Override
-    public List<LinkageRequestCategoryDTO> findCategoriesByCommonCode(String categoryCode) {
+    public List<LinkageRequestCategoryDTO> findCategoriesByCommonCode(String shopCode, Integer serviceId, String categoryCode) {
+        Integer shopId = shopMappingService.getShopIdByShopCode(shopCode);
+
         URI uri = UriComponentsBuilder.newInstance()
                 .scheme("http").host(this.mposUri).path("/dev/v1").path("/commoncode/category/read.json")
-                .queryParam("service_id", GlobalProperties.serviceId)
-                .queryParam("shop_id", GlobalProperties.shopId)
+                .queryParam("shop_id", shopId)
+                .queryParam("service_id", serviceId)
+                .queryParam("category_codes",categoryCode)
                 .queryParam("access_token", accessToken)
                 .encode()
                 .build(true).toUri();

@@ -9,5 +9,5 @@ import java.util.List;
 public interface LinkageService {
     MPOSLoginDTO loginToMPOS();
     MPOSAuthorizeDTO authorizeMPOS();
-    List<LinkageRequestCategoryDTO> findCategoriesByCommonCode(String categoryCode);
+    List<LinkageRequestCategoryDTO> findCategoriesByCommonCode(String shopCode, Integer serviceId, String categoryCode);
 }

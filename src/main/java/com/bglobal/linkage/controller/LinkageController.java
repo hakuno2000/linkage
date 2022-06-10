@@ -24,10 +24,10 @@ public class LinkageController {
         System.out.println("Login completed");
     }
 
-    @GetMapping("/linkage/category")
-    public ResponseEntity<List<LinkageRequestCategoryDTO>> getCategories() {
-        List<LinkageRequestCategoryDTO> categories = linkageService.findCategoriesByCommonCode("");
-        if (categories.isEmpty()) return ResponseEntity.noContent().build();
-        return ResponseEntity.ok(categories);
-    }
+//    @GetMapping("/linkage/category")
+//    public ResponseEntity<List<LinkageRequestCategoryDTO>> getCategories() {
+//        List<LinkageRequestCategoryDTO> categories = linkageService.findCategoriesByCommonCode("");
+//        if (categories.isEmpty()) return ResponseEntity.noContent().build();
+//        return ResponseEntity.ok(categories);
+//    }
 }
