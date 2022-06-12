@@ -1,6 +1,7 @@
 package com.bglobal.linkage.service;
 
 import com.bglobal.linkage.DTO.LinkageRequestCategoryDTO;
+import com.bglobal.linkage.DTO.LinkageRequestItemDTO;
 import com.bglobal.linkage.DTO.MPOSAuthorizeDTO;
 import com.bglobal.linkage.DTO.MPOSLoginDTO;
 
@@ -10,4 +11,5 @@ public interface LinkageService {
     MPOSLoginDTO loginToMPOS();
     MPOSAuthorizeDTO authorizeMPOS();
     List<LinkageRequestCategoryDTO> findCategoriesByCommonCode(String shopCode, Integer serviceId, String categoryCode);
+    List<LinkageRequestItemDTO> findItemsByCommonCode(String shopCode, Integer serviceId, String itemCode);
 }
