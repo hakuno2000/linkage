@@ -43,4 +43,31 @@ public class ItemController {
 
         return ResponseEntity.ok(listItemDTO);
     }
+
+    @GetMapping("/item/detail/read")
+    public ResponseEntity<ListItemDetailDTO> getItemDetails(@RequestHeader("authorization") String token,
+                                                @RequestParam(name = "itemDetailCode", required = false, defaultValue = "") String itemDetailCode,
+                                                @RequestParam(name = "shopCode", required = false, defaultValue = "277_404") String shopCode,
+                                                @RequestParam(name = "itemDetailState", required = false, defaultValue = "1") Integer itemDetailState,
+                                                HttpServletRequest request) {
+        if (!Authorization.checkToken(token, request)) {
+            return ResponseEntity.status(401).build();
+        }
+
+        List<LinkageRequestItemDetailDTO> tempItemDetails = linkageService.findItemDetailsByCommonCode(shopCode, 2, itemDetailCode);
+        if (tempItemDetails.isEmpty()) return ResponseEntity.noContent().build();
+
+        List<LinkageResponseItemDetailDTO> itemDetails = new ArrayList<>();
+        for (LinkageRequestItemDetailDTO tempItemDetail : tempItemDetails) {
+            if (!tempItemDetail.getState().equals(itemDetailState)) continue;
+            LinkageResponseItemDetailDTO itemDetail = new LinkageResponseItemDetailDTO(tempItemDetail);
+            itemDetails.add(itemDetail);
+        }
+
+        ListItemDetailDTO listItemDetailDTO = new ListItemDetailDTO();
+        listItemDetailDTO.setItemDetails(itemDetails);
+        listItemDetailDTO.setShopCode(shopCode);
+
+        return ResponseEntity.ok(listItemDetailDTO);
+    }
 }

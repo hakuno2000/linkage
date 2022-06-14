@@ -1,9 +1,6 @@
 package com.bglobal.linkage.service;
 
-import com.bglobal.linkage.DTO.LinkageRequestCategoryDTO;
-import com.bglobal.linkage.DTO.LinkageRequestItemDTO;
-import com.bglobal.linkage.DTO.MPOSAuthorizeDTO;
-import com.bglobal.linkage.DTO.MPOSLoginDTO;
+import com.bglobal.linkage.DTO.*;
 
 import java.util.List;
 
@@ -12,4 +9,6 @@ public interface LinkageService {
     MPOSAuthorizeDTO authorizeMPOS();
     List<LinkageRequestCategoryDTO> findCategoriesByCommonCode(String shopCode, Integer serviceId, String categoryCode);
     List<LinkageRequestItemDTO> findItemsByCommonCode(String shopCode, Integer serviceId, String itemCode);
+
+    List<LinkageRequestItemDetailDTO> findItemDetailsByCommonCode(String shopCode, Integer serviceId, String itemDetailCode);
 }

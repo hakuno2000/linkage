@@ -1,9 +1,6 @@
 package com.bglobal.linkage.service;
 
-import com.bglobal.linkage.DTO.LinkageRequestCategoryDTO;
-import com.bglobal.linkage.DTO.LinkageRequestItemDTO;
-import com.bglobal.linkage.DTO.MPOSAuthorizeDTO;
-import com.bglobal.linkage.DTO.MPOSLoginDTO;
+import com.bglobal.linkage.DTO.*;
 import com.bglobal.linkage.support.GlobalProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -135,6 +132,28 @@ public class LinkageServiceImpl implements LinkageService {
                 .header("Authorization", accessToken)
                 .retrieve()
                 .bodyToFlux(LinkageRequestItemDTO.class);
+
+        return response.collectList().block();
+    }
+
+    @Override
+    public List<LinkageRequestItemDetailDTO> findItemDetailsByCommonCode(String shopCode, Integer serviceId, String itemDetailCode) {
+        Integer shopId = shopMappingService.getShopIdByShopCode(shopCode);
+
+        URI uri = UriComponentsBuilder.newInstance()
+                .scheme("http").host(this.mposUri).path("/dev/v1").path("/commoncode/item/detail/read.json")
+                .queryParam("shop_id", shopId)
+                .queryParam("service_id", serviceId)
+                .queryParam("item_detail_codes",itemDetailCode)
+                .queryParam("access_token", accessToken)
+                .encode()
+                .build(true).toUri();
+
+        Flux<LinkageRequestItemDetailDTO> response = webClient.get()
+                .uri(uri)
+                .header("Authorization", accessToken)
+                .retrieve()
+                .bodyToFlux(LinkageRequestItemDetailDTO.class);
 
         return response.collectList().block();
     }
