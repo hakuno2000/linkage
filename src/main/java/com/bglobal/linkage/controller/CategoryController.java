@@ -2,6 +2,7 @@ package com.bglobal.linkage.controller;
 
 import com.bglobal.linkage.DTO.LinkageRequestCategoryDTO;
 import com.bglobal.linkage.DTO.LinkageResponseCategoryDTO;
+import com.bglobal.linkage.DTO.ListCategoryDTO;
 import com.bglobal.linkage.service.LinkageService;
 import com.bglobal.linkage.support.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,11 @@ public class CategoryController {
     private LinkageService linkageService;
 
     @GetMapping("/category/read")
-    public ResponseEntity<List<LinkageResponseCategoryDTO>> getCategories(@RequestHeader("authorization") String token,
-                                                                          @RequestParam(name = "categoryCode", required = false, defaultValue = "") String categoryCode,
-                                                                          @RequestParam(name = "shopCode", required = false, defaultValue = "277_404") String shopCode,
-                                                                          @RequestParam(name = "categoryState", required = false, defaultValue = "1") Integer categoryState,
-                                                                          HttpServletRequest request) {
+    public ResponseEntity<ListCategoryDTO> getCategories(@RequestHeader("authorization") String token,
+                                                         @RequestParam(name = "categoryCode", required = false, defaultValue = "") String categoryCode,
+                                                         @RequestParam(name = "shopCode", required = false, defaultValue = "277_404") String shopCode,
+                                                         @RequestParam(name = "categoryState", required = false, defaultValue = "1") Integer categoryState,
+                                                         HttpServletRequest request) {
         if (!Authorization.checkToken(token, request)) {
             return ResponseEntity.status(401).build();
         }
@@ -38,6 +39,10 @@ public class CategoryController {
             categories.add(category);
         }
 
-        return ResponseEntity.ok(categories);
+        ListCategoryDTO listCategoryDTO = new ListCategoryDTO();
+        listCategoryDTO.setCategories(categories);
+        listCategoryDTO.setShopCode(shopCode);
+
+        return ResponseEntity.ok(listCategoryDTO);
     }
 }

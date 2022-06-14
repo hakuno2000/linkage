@@ -18,7 +18,7 @@ public class LinkageResponseCategoryDTO {
     private Integer state;
     private Integer created;
     private Integer modified;
-    private String shopCode;
+    private Object tags;
 
     public LinkageResponseCategoryDTO(LinkageRequestCategoryDTO linkageRequestCategoryDTO) {
         this.categoryCode = linkageRequestCategoryDTO.getCommonCode();
@@ -30,6 +30,5 @@ public class LinkageResponseCategoryDTO {
         this.state = linkageRequestCategoryDTO.getState();
         this.created = linkageRequestCategoryDTO.getCreated();
         this.modified = linkageRequestCategoryDTO.getModified();
-        this.shopCode = linkageRequestCategoryDTO.getShopId().toString();
     }
 }
