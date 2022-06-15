@@ -70,4 +70,32 @@ public class ItemController {
 
         return ResponseEntity.ok(listItemDetailDTO);
     }
+
+    @GetMapping("/item/detail/content/read")
+    public ResponseEntity<ListItemDetailContentDTO> getItemDetailContents(@RequestHeader("authorization") String token,
+                                                            @RequestParam(name = "itemDetailCode", required = false, defaultValue = "") String itemDetailCode,
+                                                            @RequestParam(name = "itemDetailContentCode", required = false, defaultValue = "") String itemDetailContentCode,
+                                                            @RequestParam(name = "shopCode", required = false, defaultValue = "277_404") String shopCode,
+                                                            @RequestParam(name = "itemDetailContentState", required = false, defaultValue = "1") Integer itemDetailContentState,
+                                                            HttpServletRequest request) {
+        if (!Authorization.checkToken(token, request)) {
+            return ResponseEntity.status(401).build();
+        }
+
+        List<LinkageRequestItemDetailContentDTO> tempItemDetailContents = linkageService.findItemDetailContentsByCommonCode(shopCode, 2, itemDetailCode, itemDetailContentCode);
+        if (tempItemDetailContents.isEmpty()) return ResponseEntity.noContent().build();
+
+        List<LinkageResponseItemDetailContentDTO> itemDetailContents = new ArrayList<>();
+        for (LinkageRequestItemDetailContentDTO tempItemDetailContent : tempItemDetailContents) {
+            if (!tempItemDetailContent.getState().equals(itemDetailContentState)) continue;
+            LinkageResponseItemDetailContentDTO itemDetailContent = new LinkageResponseItemDetailContentDTO(tempItemDetailContent);
+            itemDetailContents.add(itemDetailContent);
+        }
+
+        ListItemDetailContentDTO listItemDetailContentDTO = new ListItemDetailContentDTO();
+        listItemDetailContentDTO.setItemDetailContents(itemDetailContents);
+        listItemDetailContentDTO.setShopCode(shopCode);
+
+        return ResponseEntity.ok(listItemDetailContentDTO);
+    }
 }

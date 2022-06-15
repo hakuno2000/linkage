@@ -11,4 +11,6 @@ public interface LinkageService {
     List<LinkageRequestItemDTO> findItemsByCommonCode(String shopCode, Integer serviceId, String itemCode);
 
     List<LinkageRequestItemDetailDTO> findItemDetailsByCommonCode(String shopCode, Integer serviceId, String itemDetailCode);
+
+    List<LinkageRequestItemDetailContentDTO> findItemDetailContentsByCommonCode(String shopCode, Integer serviceId, String itemDetailCode, String itemDetailContentCode);
 }

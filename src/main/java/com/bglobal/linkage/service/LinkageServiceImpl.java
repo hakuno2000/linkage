@@ -100,7 +100,7 @@ public class LinkageServiceImpl implements LinkageService {
                 .scheme("http").host(this.mposUri).path("/dev/v1").path("/commoncode/category/read.json")
                 .queryParam("shop_id", shopId)
                 .queryParam("service_id", serviceId)
-                .queryParam("category_codes",categoryCode)
+                .queryParam("category_codes", categoryCode)
                 .queryParam("access_token", accessToken)
                 .encode()
                 .build(true).toUri();
@@ -122,7 +122,7 @@ public class LinkageServiceImpl implements LinkageService {
                 .scheme("http").host(this.mposUri).path("/dev/v1").path("/commoncode/item/read.json")
                 .queryParam("shop_id", shopId)
                 .queryParam("service_id", serviceId)
-                .queryParam("item_codes",itemCode)
+                .queryParam("item_codes", itemCode)
                 .queryParam("access_token", accessToken)
                 .encode()
                 .build(true).toUri();
@@ -144,7 +144,7 @@ public class LinkageServiceImpl implements LinkageService {
                 .scheme("http").host(this.mposUri).path("/dev/v1").path("/commoncode/item/detail/read.json")
                 .queryParam("shop_id", shopId)
                 .queryParam("service_id", serviceId)
-                .queryParam("item_detail_codes",itemDetailCode)
+                .queryParam("item_detail_codes", itemDetailCode)
                 .queryParam("access_token", accessToken)
                 .encode()
                 .build(true).toUri();
@@ -154,6 +154,29 @@ public class LinkageServiceImpl implements LinkageService {
                 .header("Authorization", accessToken)
                 .retrieve()
                 .bodyToFlux(LinkageRequestItemDetailDTO.class);
+
+        return response.collectList().block();
+    }
+
+    @Override
+    public List<LinkageRequestItemDetailContentDTO> findItemDetailContentsByCommonCode(String shopCode, Integer serviceId, String itemDetailCode, String itemDetailContentCode) {
+        Integer shopId = shopMappingService.getShopIdByShopCode(shopCode);
+
+        URI uri = UriComponentsBuilder.newInstance()
+                .scheme("http").host(this.mposUri).path("/dev/v1").path("/commoncode/item/detail/content/read.json")
+                .queryParam("shop_id", shopId)
+                .queryParam("service_id", serviceId)
+                .queryParam("item_detail_content_codes", itemDetailContentCode)
+                .queryParam("item_detail_codes", itemDetailCode)
+                .queryParam("access_token", accessToken)
+                .encode()
+                .build(true).toUri();
+
+        Flux<LinkageRequestItemDetailContentDTO> response = webClient.get()
+                .uri(uri)
+                .header("Authorization", accessToken)
+                .retrieve()
+                .bodyToFlux(LinkageRequestItemDetailContentDTO.class);
 
         return response.collectList().block();
     }
