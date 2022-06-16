@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.net.URI;
 import java.util.List;
@@ -90,6 +91,24 @@ public class LinkageServiceImpl implements LinkageService {
         accessToken = response.getAccessToken();
         refreshToken = response.getRefreshToken();
         return response;
+    }
+
+    @Override
+    public Integer getShopIdByShopCode(String shopCode) {
+        URI uri = UriComponentsBuilder.newInstance()
+                .scheme("http").host(this.mposUri).path("/dev/v1").path("/commoncode/shop/read.json")
+                .queryParam("shop_codes", shopCode)
+                .queryParam("access_token", accessToken)
+                .encode()
+                .build(true).toUri();
+
+        Mono<ShopDTO> response = webClient.get()
+                .uri(uri)
+                .retrieve()
+                .bodyToMono(ShopDTO.class);
+        ShopDTO shopDTO = response.block();
+        if (shopDTO == null) return null;
+        return shopDTO.getShopId();
     }
 
     @Override
@@ -177,6 +196,28 @@ public class LinkageServiceImpl implements LinkageService {
                 .header("Authorization", accessToken)
                 .retrieve()
                 .bodyToFlux(LinkageRequestItemDetailContentDTO.class);
+
+        return response.collectList().block();
+    }
+
+    @Override
+    public List<LinkageRequestTableDTO> findTablesByCommonCode(String shopCode, Integer serviceId, String tableCode) {
+        Integer shopId = shopMappingService.getShopIdByShopCode(shopCode);
+
+        URI uri = UriComponentsBuilder.newInstance()
+                .scheme("http").host(this.mposUri).path("/dev/v1").path("/commoncode/table/read.json")
+                .queryParam("shop_id", shopId)
+                .queryParam("service_id", serviceId)
+                .queryParam("table_codes", tableCode)
+                .queryParam("access_token", accessToken)
+                .encode()
+                .build(true).toUri();
+
+        Flux<LinkageRequestTableDTO> response = webClient.get()
+                .uri(uri)
+                .header("Authorization", accessToken)
+                .retrieve()
+                .bodyToFlux(LinkageRequestTableDTO.class);
 
         return response.collectList().block();
     }
