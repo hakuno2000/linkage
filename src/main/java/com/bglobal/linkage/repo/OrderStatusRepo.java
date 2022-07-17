@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 public interface OrderStatusRepo extends JpaRepository<OrderStatus, String> {
     OrderStatus findFirstByOrderCodeAndServiceIdAndShopId(String orderCode, String serviceId, Integer shopId);
     OrderStatus findFirstByOrderCode(String orderCode);
+    OrderStatus save(OrderStatus orderStatus);
 }

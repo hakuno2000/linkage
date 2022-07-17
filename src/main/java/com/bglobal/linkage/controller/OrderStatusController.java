@@ -1,5 +1,6 @@
 package com.bglobal.linkage.controller;
 
+import com.bglobal.linkage.DTO.OrderStatusDTO;
 import com.bglobal.linkage.entity.OrderStatus;
 import com.bglobal.linkage.service.OrderStatusService;
 import com.bglobal.linkage.service.ShopMappingService;
@@ -19,11 +20,11 @@ public class OrderStatusController {
     private ShopMappingService shopMappingService;
 
     @GetMapping("/order/status")
-    public ResponseEntity<OrderStatus> getOrderStatus(@RequestHeader("authorization") String token,
-                                                      @RequestParam(name = "orderCode", required = false, defaultValue = "") String orderCode,
-                                                      @RequestParam(name = "serviceId", required = false, defaultValue = "") String serviceId,
-                                                      @RequestParam(name = "shopCode", required = false, defaultValue = "") String shopCode,
-                                                      HttpServletRequest request) {
+    public ResponseEntity<OrderStatusDTO> getOrderStatus(@RequestHeader("authorization") String token,
+                                                         @RequestParam(name = "orderCode", required = false, defaultValue = "") String orderCode,
+                                                         @RequestParam(name = "serviceId", required = false, defaultValue = "") String serviceId,
+                                                         @RequestParam(name = "shopCode", required = false, defaultValue = "") String shopCode,
+                                                         HttpServletRequest request) {
 //        if (!Authorization.checkToken(token, request)) {
 //            return ResponseEntity.status(401).build();
 //        }
@@ -37,6 +38,7 @@ public class OrderStatusController {
             return ResponseEntity.status(404).build();
         }
 
-        return ResponseEntity.ok(orderStatus);
+        OrderStatusDTO orderStatusDTO = new OrderStatusDTO(orderStatus);
+        return ResponseEntity.ok(orderStatusDTO);
     }
 }

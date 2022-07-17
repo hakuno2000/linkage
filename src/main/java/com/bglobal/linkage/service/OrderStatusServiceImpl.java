@@ -19,4 +19,9 @@ public class OrderStatusServiceImpl implements OrderStatusService {
     public OrderStatus getOrderStatus(String orderCode) {
         return orderStatusRepo.findFirstByOrderCode(orderCode);
     }
+
+    @Override
+    public OrderStatus save(OrderStatus orderStatus) {
+        return orderStatusRepo.save(orderStatus);
+    }
 }
