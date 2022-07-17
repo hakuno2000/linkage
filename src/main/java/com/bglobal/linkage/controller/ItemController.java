@@ -23,9 +23,9 @@ public class ItemController {
                                                 @RequestParam(name = "shopCode", required = false, defaultValue = "277_404") String shopCode,
                                                 @RequestParam(name = "itemState", required = false, defaultValue = "1") Integer itemState,
                                                 HttpServletRequest request) {
-        if (!Authorization.checkToken(token, request)) {
-            return ResponseEntity.status(401).build();
-        }
+//        if (!Authorization.checkToken(token, request)) {
+//            return ResponseEntity.status(401).build();
+//        }
 
         List<LinkageRequestItemDTO> tempItems = linkageService.findItemsByCommonCode(shopCode, 2, itemCode);
         if (tempItems.isEmpty()) return ResponseEntity.noContent().build();
@@ -50,9 +50,9 @@ public class ItemController {
                                                 @RequestParam(name = "shopCode", required = false, defaultValue = "277_404") String shopCode,
                                                 @RequestParam(name = "itemDetailState", required = false, defaultValue = "1") Integer itemDetailState,
                                                 HttpServletRequest request) {
-        if (!Authorization.checkToken(token, request)) {
-            return ResponseEntity.status(401).build();
-        }
+//        if (!Authorization.checkToken(token, request)) {
+//            return ResponseEntity.status(401).build();
+//        }
 
         List<LinkageRequestItemDetailDTO> tempItemDetails = linkageService.findItemDetailsByCommonCode(shopCode, 2, itemDetailCode);
         if (tempItemDetails.isEmpty()) return ResponseEntity.noContent().build();
@@ -78,9 +78,9 @@ public class ItemController {
                                                             @RequestParam(name = "shopCode", required = false, defaultValue = "277_404") String shopCode,
                                                             @RequestParam(name = "itemDetailContentState", required = false, defaultValue = "1") Integer itemDetailContentState,
                                                             HttpServletRequest request) {
-        if (!Authorization.checkToken(token, request)) {
-            return ResponseEntity.status(401).build();
-        }
+//        if (!Authorization.checkToken(token, request)) {
+//            return ResponseEntity.status(401).build();
+//        }
 
         List<LinkageRequestItemDetailContentDTO> tempItemDetailContents = linkageService.findItemDetailContentsByCommonCode(shopCode, 2, itemDetailCode, itemDetailContentCode);
         if (tempItemDetailContents.isEmpty()) return ResponseEntity.noContent().build();

@@ -25,9 +25,9 @@ public class CategoryController {
                                                          @RequestParam(name = "shopCode", required = false, defaultValue = "277_404") String shopCode,
                                                          @RequestParam(name = "categoryState", required = false, defaultValue = "1") Integer categoryState,
                                                          HttpServletRequest request) {
-        if (!Authorization.checkToken(token, request)) {
-            return ResponseEntity.status(401).build();
-        }
+//        if (!Authorization.checkToken(token, request)) {
+//            return ResponseEntity.status(401).build();
+//        }
 
         List<LinkageRequestCategoryDTO> tempCategories = linkageService.findCategoriesByCommonCode(shopCode, 2, categoryCode);
         if (tempCategories.isEmpty()) return ResponseEntity.noContent().build();

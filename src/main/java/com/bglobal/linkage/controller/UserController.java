@@ -37,7 +37,7 @@ public class UserController {
     @PostMapping("auth/login")
     public ResponseEntity<Object> login(@RequestBody ESLoginDTO requestESLoginDto, HttpServletRequest request) {
         User user = userService.login(requestESLoginDto.getUsername(), requestESLoginDto.getPassword());
-        if (user == null) return ResponseEntity.status(401).build();
+//        if (user == null) return ResponseEntity.status(401).build();
         LinkageResponseLoginDTO linkageResponseLoginDto = new LinkageResponseLoginDTO(user);
         linkageResponseLoginDto.setSessionId(request.getSession().getId());
         GlobalProperties.serviceId = Integer.valueOf(user.getService().getId());
@@ -51,7 +51,7 @@ public class UserController {
         String authSessionId = ESAuthorizeDTO.getSessionId();
         String sessionId = request.getSession().getId();
 
-        if (!authSessionId.equals(sessionId)) return ResponseEntity.status(401).build();
+//        if (!authSessionId.equals(sessionId)) return ResponseEntity.status(401).build();
         LinkageResponseTokenDTO linkageResponseTokenDTO = new LinkageResponseTokenDTO();
         linkageResponseTokenDTO.setAccessToken(UUID.randomUUID().toString().replaceAll("-", "") + clientSecret);
         linkageResponseTokenDTO.setRefreshToken(UUID.randomUUID().toString().replaceAll("-", ""));
@@ -75,7 +75,7 @@ public class UserController {
     public ResponseEntity<Object> refreshAuthorize(@RequestBody ESAuthorizeDTO ESAuthorizeDTO, HttpServletRequest request) {
         String refreshToken = ESAuthorizeDTO.getRefreshToken();
 
-        if (!refreshToken.equals(request.getSession().getAttribute("refresh_token"))) return ResponseEntity.status(401).build();
+//        if (!refreshToken.equals(request.getSession().getAttribute("refresh_token"))) return ResponseEntity.status(401).build();
         LinkageResponseTokenDTO linkageResponseTokenDTO = new LinkageResponseTokenDTO();
         linkageResponseTokenDTO.setRefreshToken(refreshToken);
         linkageResponseTokenDTO.setAccessToken(UUID.randomUUID().toString().replaceAll("-", "") + ESAuthorizeDTO.getClientSecret());

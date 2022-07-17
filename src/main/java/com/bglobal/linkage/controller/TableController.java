@@ -23,9 +23,9 @@ public class TableController {
                                                 @RequestParam(name = "shopCode", required = false, defaultValue = "277_404") String shopCode,
                                                 @RequestParam(name = "tableState", required = false, defaultValue = "1") Integer tableState,
                                                 HttpServletRequest request) {
-        if (!Authorization.checkToken(token, request)) {
-            return ResponseEntity.status(401).build();
-        }
+//        if (!Authorization.checkToken(token, request)) {
+//            return ResponseEntity.status(401).build();
+//        }
 
         List<LinkageRequestTableDTO> tempTables = linkageService.findTablesByCommonCode(shopCode, 2, tableCode);
         if (tempTables.isEmpty()) return ResponseEntity.noContent().build();

@@ -16,4 +16,11 @@ public class ShopMappingServiceImpl implements ShopMappingService{
         if (shop == null) return null;
         return shop.getShopId();
     }
+
+    @Override
+    public String getShopCodeByShopId(Integer shopId) {
+        ShopMapping shop = shopMappingRepo.findFirstByShopId(shopId);
+        if (shop == null) return null;
+        return shop.getCommonCode();
+    }
 }

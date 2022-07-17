@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ShopMappingRepo extends JpaRepository<ShopMapping, Integer> {
     ShopMapping findFirstByCommonCode(String shopCode);
+    ShopMapping findFirstByShopId(Integer shopId);
 }
