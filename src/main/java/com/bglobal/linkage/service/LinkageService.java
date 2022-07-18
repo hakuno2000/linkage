@@ -1,6 +1,7 @@
 package com.bglobal.linkage.service;
 
 import com.bglobal.linkage.DTO.*;
+import com.bglobal.linkage.table.TableActivityDTO;
 
 import java.util.List;
 
@@ -15,4 +16,5 @@ public interface LinkageService {
 
     List<LinkageRequestItemDetailContentDTO> findItemDetailContentsByCommonCode(String shopCode, Integer serviceId, String itemDetailCode, String itemDetailContentCode);
     List<LinkageRequestTableDTO> findTablesByCommonCode(String shopCode, Integer serviceId, String tableCode);
+    List<TableActivityDTO> findTableActivitiesByCommonCode(String shopCode, Integer serviceId, String tableActivityCode, String tableCode, String ownerId);
 }

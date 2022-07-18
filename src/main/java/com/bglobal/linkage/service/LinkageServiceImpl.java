@@ -1,7 +1,7 @@
 package com.bglobal.linkage.service;
 
 import com.bglobal.linkage.DTO.*;
-import com.bglobal.linkage.support.GlobalProperties;
+import com.bglobal.linkage.table.TableActivityDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -218,6 +218,30 @@ public class LinkageServiceImpl implements LinkageService {
                 .header("Authorization", accessToken)
                 .retrieve()
                 .bodyToFlux(LinkageRequestTableDTO.class);
+
+        return response.collectList().block();
+    }
+
+    @Override
+    public List<TableActivityDTO> findTableActivitiesByCommonCode(String shopCode, Integer serviceId, String tableActivityCode, String tableCode, String ownerId) {
+        Integer shopId = shopMappingService.getShopIdByShopCode(shopCode);
+
+        URI uri = UriComponentsBuilder.newInstance()
+                .scheme("http").host(this.mposUri).path("/dev/v1").path("/linkage/table/activity/read.json")
+                .queryParam("shop_id", shopId)
+                .queryParam("service_id", serviceId)
+                .queryParam("table_codes", tableCode)
+                .queryParam("table_activity_code", tableActivityCode)
+                .queryParam("owner_id", ownerId)
+                .queryParam("access_token", accessToken)
+                .encode()
+                .build(true).toUri();
+
+        Flux<TableActivityDTO> response = webClient.get()
+                .uri(uri)
+                .header("Authorization", accessToken)
+                .retrieve()
+                .bodyToFlux(TableActivityDTO.class);
 
         return response.collectList().block();
     }
