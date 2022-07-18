@@ -35,7 +35,7 @@ public class OrderController {
         orderStatus.setCreated(BigInteger.valueOf(System.currentTimeMillis() / 1000));
         orderStatus.setLog("");
         orderStatus.setModified(BigInteger.valueOf(0));
-        orderStatus.setOrderCode(RandomUUID.generate());
+        orderStatus.setOrderCode(orderDTO.getOrderCode());
         orderStatus.setRetry(0);
         orderStatus.setServiceId(orderDTO.getServiceId());
         orderStatus.setShopId(shopMappingService.getShopIdByShopCode(orderDTO.getShopCode()));

@@ -27,14 +27,14 @@ public class OrderDTO {
     private Customer customer;
     private List<OrderDetail> orderDetails;
 
-    public class Customer {
+    public static class Customer {
         private String customerCode;
         private String name;
         private String phone;
         private String email;
     }
 
-    public class OrderDetail {
+    public static class OrderDetail {
         private String orderDetailCode;
         private String itemCode;
         private String itemName;
@@ -50,7 +50,7 @@ public class OrderDTO {
         private Integer total;
         private List<ItemDetailContent> itemDetailContents;
 
-        public class ItemDetailContent {
+        public static class ItemDetailContent {
             private String comment;
             private Integer discountPercent;
             private Integer discountType;
